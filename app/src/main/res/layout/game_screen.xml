@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg"
+    android:padding="30dp">
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="8"
+        android:padding="8dp"
+        android:rowCount="8" />
+
+    <LinearLayout
+        android:id="@+id/overlayBox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:background="@drawable/tile2"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:padding="30dp">
+            <ImageButton
+                android:id="@+id/closeBtn1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@android:drawable/ic_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Close"
+                android:scaleType="fitCenter"
+                app:tint="@color/white"/>
+            <TextView
+                android:id="@+id/resultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Game Over"
+                android:layout_gravity="center"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"/>
+
+            <FrameLayout
+                android:layout_width="150dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp">
+
+                <ImageButton
+                    android:id="@+id/restartBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="tile"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/tile2" />
+
+                <TextView
+                    android:id="@+id/medium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/minesweeper"
+                    android:gravity="center"
+                    android:text="Restart"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
