@@ -6,25 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    android:padding="30dp"
+    android:padding="0dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:id="@+id/settingsBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Settings"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/ic_settings"
-            app:tint="#5F6472" />
+        android:orientation="vertical"
+        android:padding="30dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -54,7 +43,7 @@
                     android:background="@null"
                     android:contentDescription="tile"
                     android:scaleType="fitXY"
-                    android:src="@drawable/tile2" />
+                    android:src="@drawable/tile" />
 
                 <TextView
                     android:id="@+id/text1"
@@ -79,7 +68,7 @@
                     android:background="@null"
                     android:contentDescription="tile"
                     android:scaleType="fitXY"
-                    android:src="@drawable/tile2" />
+                    android:src="@drawable/tile" />
 
                 <TextView
                     android:id="@+id/text2"
@@ -103,7 +92,7 @@
                     android:background="@null"
                     android:contentDescription="tile"
                     android:scaleType="fitXY"
-                    android:src="@drawable/tile2" />
+                    android:src="@drawable/tile" />
 
                 <TextView
                     android:id="@+id/text3"
@@ -130,12 +119,13 @@
         android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="450dp"
-            android:background="@drawable/tile2"
+            android:layout_width="370dp"
+            android:layout_height="480dp"
+            android:background="@drawable/tile"
             android:elevation="8dp"
             android:orientation="vertical"
-            android:padding="40dp">
+            android:padding="50dp"
+            android:layout_gravity="center_vertical">
 
             <ImageButton
                 android:id="@+id/closeBtn1"
@@ -145,13 +135,15 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Close"
                 android:scaleType="fitCenter"
-                app:tint="@color/white"/>
+                app:tint="@color/white"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <FrameLayout
@@ -166,7 +158,7 @@
                         android:background="@null"
                         android:contentDescription="tile"
                         android:scaleType="fitXY"
-                        android:src="@drawable/tile2" />
+                        android:src="@drawable/tile" />
 
                     <TextView
                         android:id="@+id/easy"
@@ -191,7 +183,7 @@
                         android:background="@null"
                         android:contentDescription="tile"
                         android:scaleType="fitXY"
-                        android:src="@drawable/tile2" />
+                        android:src="@drawable/tile" />
 
                     <TextView
                         android:id="@+id/medium"
@@ -215,7 +207,7 @@
                         android:background="@null"
                         android:contentDescription="tile"
                         android:scaleType="fitXY"
-                        android:src="@drawable/tile2" />
+                        android:src="@drawable/tile" />
 
                     <TextView
                         android:id="@+id/hard"
@@ -244,7 +236,7 @@
         <LinearLayout
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:background="@drawable/tile2"
+            android:background="@drawable/tile"
             android:elevation="8dp"
             android:orientation="vertical"
             android:padding="50dp">
@@ -267,7 +259,7 @@
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:layout_width="220dp"
+                    android:layout_width="230dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="20dp">
 
@@ -278,7 +270,7 @@
                         android:background="@null"
                         android:contentDescription="tile"
                         android:scaleType="fitXY"
-                        android:src="@drawable/tile2" />
+                        android:src="@drawable/tile" />
 
                     <TextView
                         android:id="@+id/find"
@@ -288,11 +280,11 @@
                         android:gravity="center"
                         android:text="Find Room"
                         android:textColor="@android:color/white"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </FrameLayout>
 
                 <FrameLayout
-                    android:layout_width="220dp"
+                    android:layout_width="230dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="20dp">
 
@@ -303,7 +295,7 @@
                         android:background="@null"
                         android:contentDescription="tile"
                         android:scaleType="fitXY"
-                        android:src="@drawable/tile2" />
+                        android:src="@drawable/tile" />
 
                     <TextView
                         android:id="@+id/create"
@@ -313,7 +305,7 @@
                         android:gravity="center"
                         android:text="Create Room"
                         android:textColor="@android:color/white"
-                        android:textSize="14sp" />
+                        android:textSize="13sp" />
                 </FrameLayout>
 
             </LinearLayout>

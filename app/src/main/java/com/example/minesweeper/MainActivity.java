@@ -1,5 +1,6 @@
 package com.example.minesweeper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -15,6 +16,9 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     FrameLayout homeScreen;
+    ImageButton arcade, room, leaderBoard, easyMode, mediumMode, hardMode, findRoom, createRoom;
+    LinearLayout levels, rooms;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,37 +30,51 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         homeScreen=findViewById(R.id.main);
-        ImageButton arcade=findViewById(R.id.arcadeBtn);
-        ImageButton room=findViewById(R.id.roomBtn);
-        ImageButton leaderBoard=findViewById(R.id.leaderBoardBtn);
-        LinearLayout levels = findViewById(R.id.levelsOverlay);
-        LinearLayout rooms = findViewById(R.id.roomsOverlay);
+        arcade=findViewById(R.id.arcadeBtn);
+        room=findViewById(R.id.roomBtn);
+        leaderBoard=findViewById(R.id.leaderBoardBtn);
+        levels = findViewById(R.id.levelsOverlay);
+        rooms = findViewById(R.id.roomsOverlay);
+        easyMode = findViewById(R.id.easyBtn);
+        mediumMode = findViewById(R.id.mediumBtn);
+        hardMode = findViewById(R.id.harBtn);
 
         ImageButton close1 = findViewById(R.id.closeBtn1);
         ImageButton close2 = findViewById(R.id.closeBtn2);
 
         close1.setOnClickListener(v -> {
             levels.setVisibility(View.GONE);
-            homeScreen.setPadding(30,30,30,30);
         });
         close2.setOnClickListener(v -> {
             rooms.setVisibility(View.GONE);
-            homeScreen.setPadding(30,30,30,30);
         });
         arcade.setOnClickListener(v -> {
-            homeScreen.setPadding(0,0,0,0);
             levels.setVisibility(View.VISIBLE);
             levels.setAlpha(0f);
             levels.animate().alpha(1f).setDuration(300);
         });
         room.setOnClickListener(v -> {
-            homeScreen.setPadding(0,0,0,0);
             rooms.setVisibility(View.VISIBLE);
             rooms.setAlpha(0f);
             rooms.animate().alpha(1f).setDuration(300);
         });
         leaderBoard.setOnClickListener(v -> {
-            homeScreen.setPadding(0,0,0,0);
+            //leader board code
         });
+        easyMode.setOnClickListener(v -> {
+            openLevelGrid("easy");
+        });
+        mediumMode.setOnClickListener(v -> {
+            openLevelGrid("medium");
+        });
+        hardMode.setOnClickListener(v -> {
+            openLevelGrid("hard");
+        });
+    }
+    void openLevelGrid(String level)
+    {
+        Intent i=new Intent(this,GameScreen.class);
+        i.putExtra("level",level);
+        startActivity(i);
     }
 }
