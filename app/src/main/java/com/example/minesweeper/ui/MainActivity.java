@@ -1,4 +1,4 @@
-package com.example.minesweeper;
+package com.example.minesweeper.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,11 +14,21 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.minesweeper.R;
+import com.example.minesweeper.firebase.FirebaseManager;
+import com.example.minesweeper.model.Player;
+import com.example.minesweeper.model.Room;
+import com.example.minesweeper.utils.GridGenerator;
+import com.google.firebase.database.DatabaseReference;
 
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+    boolean roomMode=false;
     FrameLayout homeScreen;
-    ImageButton arcade, room, leaderBoard, easyMode, mediumMode, hardMode, findRoom, createRoom;
+    ImageButton arcade, room, stats, easyMode, mediumMode, hardMode, findRoom, createRoom;
     LinearLayout levels, rooms;
+    int rows, cols, mines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
         homeScreen=findViewById(R.id.main);
         arcade=findViewById(R.id.arcadeBtn);
         room=findViewById(R.id.roomBtn);
-        leaderBoard=findViewById(R.id.leaderBoardBtn);
+        stats=findViewById(R.id.statsBtn);
         levels = findViewById(R.id.levelsOverlay);
         rooms = findViewById(R.id.roomsOverlay);
         easyMode = findViewById(R.id.easyBtn);
         mediumMode = findViewById(R.id.mediumBtn);
         hardMode = findViewById(R.id.harBtn);
+        createRoom = findViewById(R.id.createBtn);
+        findRoom = findViewById(R.id.findBtn);
 
         ImageButton close1 = findViewById(R.id.closeBtn1);
         ImageButton close2 = findViewById(R.id.closeBtn2);
@@ -58,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
             rooms.setAlpha(0f);
             rooms.animate().alpha(1f).setDuration(300);
         });
-        leaderBoard.setOnClickListener(v -> {
-            //leader board code
+        stats.setOnClickListener(v -> {
+            Intent i=new Intent(this, StatsActivity.class);
+            startActivity(i);
         });
         easyMode.setOnClickListener(v -> {
             openLevelGrid("easy");
@@ -70,10 +84,27 @@ public class MainActivity extends AppCompatActivity {
         hardMode.setOnClickListener(v -> {
             openLevelGrid("hard");
         });
+        createRoom.setOnClickListener(v -> {
+            Intent i=new Intent(this, CreateRoomActivity.class);
+            i.putExtra("joinRoom",false);
+            startActivity(i);
+        });
+        findRoom.setOnClickListener(v -> {
+            Intent i=new Intent(this, CreateRoomActivity.class);
+            i.putExtra("joinRoom",true);
+            startActivity(i);
+        });
     }
     void openLevelGrid(String level)
     {
-        Intent i=new Intent(this,GameScreen.class);
+        if(roomMode)
+        {
+            Intent i=new Intent(this, JoinRoomActivity.class);
+            i.putExtra("level",level);
+            startActivity(i);
+            return;
+        }
+        Intent i=new Intent(this, GameScreen.class);
         i.putExtra("level",level);
         startActivity(i);
     }

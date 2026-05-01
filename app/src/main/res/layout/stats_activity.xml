@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:padding="0dp"
+    tools:context=".ui.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+        <ImageButton
+            android:id="@+id/homeBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Home"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/home" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="280dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:contentDescription="tile"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/tile" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/minesweeper"
+                    android:gravity="center"
+                    android:text="Best Times"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </FrameLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:justifyContent="space_between">
+
+                <FrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:text="Easy"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <TextView
+                        android:id="@+id/easyTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:text="NaN"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </FrameLayout>
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:justifyContent="space_between">
+
+                <FrameLayout
+                    android:layout_width="170dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:text="Medium"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <TextView
+                        android:id="@+id/mediumTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:text="NaN"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </FrameLayout>
+            </com.google.android.flexbox.FlexboxLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:justifyContent="space_between">
+
+                <FrameLayout
+                    android:layout_width="130dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:text="Hard"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <TextView
+                        android:id="@+id/hardTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:text="NaN"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp" />
+                </FrameLayout>
+            </com.google.android.flexbox.FlexboxLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -86,7 +86,7 @@
                 android:layout_height="80dp">
 
                 <ImageButton
-                    android:id="@+id/leaderBoardBtn"
+                    android:id="@+id/statsBtn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -100,7 +100,7 @@
                     android:layout_height="match_parent"
                     android:fontFamily="@font/minesweeper"
                     android:gravity="center"
-                    android:text="Leader Board"
+                    android:text="Stats"
                     android:textColor="@android:color/white"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

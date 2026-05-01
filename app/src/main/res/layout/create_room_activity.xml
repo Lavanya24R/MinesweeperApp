@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="0dp"
+    tools:context=".ui.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/roomsOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="420dp"
+            android:background="@drawable/tile"
+            android:elevation="8dp"
+            android:orientation="vertical"
+            android:padding="50dp">
+
+            <ImageButton
+                android:id="@+id/closeBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Settings"
+                android:scaleType="fitCenter"
+                app:srcCompat="@android:drawable/ic_delete"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="230dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:id="@+id/findBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:contentDescription="tile"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tile" />
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/minesweeper"
+                        android:gravity="center"
+                        android:hint="name"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/minesweeper"
+                    android:gravity="center"
+                    android:text="Choose level :"
+                    android:textColor="@color/white" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:justifyContent="center"
+                    app:alignItems="flex_start">
+
+                    <FrameLayout
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageButton
+                            android:id="@+id/easyLevel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:contentDescription="tile"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile" />
+
+                        <TextView
+                            android:id="@+id/easy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/minesweeper"
+                            android:gravity="center"
+                            android:text="Easy"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="130dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageButton
+                            android:id="@+id/mediumLevel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:contentDescription="tile"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile" />
+
+                        <TextView
+                            android:id="@+id/medium"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/minesweeper"
+                            android:gravity="center"
+                            android:text="Medium"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="5dp">
+
+                        <ImageButton
+                            android:id="@+id/hardLevel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:contentDescription="tile"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/tile" />
+
+                        <TextView
+                            android:id="@+id/hard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/minesweeper"
+                            android:gravity="center"
+                            android:text="Hard"
+                            android:textColor="@android:color/white"
+                            android:textSize="13sp" />
+                    </FrameLayout>
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

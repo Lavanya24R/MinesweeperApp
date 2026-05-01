@@ -1,16 +1,18 @@
-package com.example.minesweeper;
+package com.example.minesweeper.ui;
 
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.minesweeper.R;
 
 import java.util.Random;
 
@@ -22,7 +24,8 @@ public class GameScreen extends AppCompatActivity {
     TextView result, numMines, timerText;
     ImageButton restart, close, flag, dig, home;
     boolean[][] isFlagged;
-    boolean flagMode = false, win=true, gameEnded = false, timerStarted = false;
+    boolean flagMode = false, win = true, gameEnded = false, timerStarted = false;
+    String level;
     int rows, cols, mines, flagsLeft, cellsToReveal, seconds = 0;
     int[][] grid;
     int[] numbers = {
@@ -46,6 +49,12 @@ public class GameScreen extends AppCompatActivity {
             ColorStateList.valueOf(Color.GRAY)
     };
     ImageButton[][] cells;
+    SharedPreferences sp;
+    private static final String FILE_NAME = "stats";
+    private static final String EASY_TIME = "easyTime";
+    private static final String MEDIUM_TIME = "mediumTime";
+    private static final String HARD_TIME = "hardTime";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +71,10 @@ public class GameScreen extends AppCompatActivity {
         home = findViewById(R.id.homeBtn);
         timerText = findViewById(R.id.time);
 
-        String level = getIntent().getStringExtra("level");
-        setLevelConfig(level);
+        sp = getSharedPreferences(FILE_NAME, MODE_PRIVATE);
+
+        level = getIntent().getStringExtra("level");
+        setLevelConfig();
 
         grid = new int[rows][cols];
         cells = new ImageButton[rows][cols];
@@ -77,22 +88,21 @@ public class GameScreen extends AppCompatActivity {
         gridLayout.setColumnCount(cols);
 
         createGrid();
-        placeMines();
         prepareForFlags();
 
-        handler = new android.os.Handler();
+        handler = new android.os.Handler(android.os.Looper.getMainLooper());
 
         flag.setOnClickListener(v -> {
             flag.setImageTintList(ColorStateList.valueOf(Color.BLACK));
             dig.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-            flagMode=true;
-                });
+            flagMode = true;
+        });
 
         dig.setOnClickListener(v -> {
             dig.setImageTintList(ColorStateList.valueOf(Color.BLACK));
             flag.setImageTintList(ColorStateList.valueOf(Color.WHITE));
-            flagMode=false;
-                });
+            flagMode = false;
+        });
 
         restart.setOnClickListener(v -> {
             handler.removeCallbacks(timerRunnable);
@@ -103,19 +113,31 @@ public class GameScreen extends AppCompatActivity {
         close.setOnClickListener(v -> gameOverOverlay.setVisibility(View.GONE));
         home.setOnClickListener(v -> finish());
     }
-    void setLevelConfig(String level)
-    {
+
+    void setLevelConfig() {
         switch (level) {
             case "easy":
-                rows = 12; cols = 6; mines = 10; break;
+                rows = 12;
+                cols = 6;
+                mines = 10;
+                break;
             case "medium":
-                rows = 21; cols = 8; mines = 35; break;
+                rows = 21;
+                cols = 8;
+                mines = 35;
+                break;
             case "hard":
-                rows = 30; cols = 10; mines = 75; break;
+                rows = 30;
+                cols = 10;
+                mines = 75;
+                break;
             default:
-                rows = 12; cols = 6; mines = 10;
+                rows = 12;
+                cols = 6;
+                mines = 10;
         }
     }
+
     void createGrid() {
 
         gridLayout.post(() -> {
@@ -135,7 +157,7 @@ public class GameScreen extends AppCompatActivity {
                     btn.setLayoutParams(params);
                     btn.setBackgroundResource(R.drawable.tile);
                     btn.setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
-                    btn.setPadding(20,20,20,20);
+                    btn.setPadding(20, 20, 20, 20);
 
                     int x = i, y = j;
 
@@ -148,27 +170,29 @@ public class GameScreen extends AppCompatActivity {
         });
     }
 
-    boolean possible(int x, int y)
-    {
-        if(x>=0 && y>=0 && x<rows && y<cols)
+    boolean possible(int x, int y) {
+        if (x >= 0 && y >= 0 && x < rows && y < cols)
             return true;
         return false;
     }
-    void placeMines() {
+
+    void placeMines(int r, int c) {
         Random rand = new Random();
         int count = 0;
 
+        int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+        int dy[] = {0, 1, 1, 1, 0, -1, -1, -1};
         while (count < mines) {
             int x = rand.nextInt(rows);
             int y = rand.nextInt(cols);
 
-            if (grid[x][y] != -1) {
+            if (grid[x][y] == -1 || (x == r && y == c) || (x == r - 1 && y == c) || (x == r - 1 && y == c + 1) || (x == r && y == c + 1) || (x == r + 1 && y == c + 1) || (x == r + 1 && y == c) || (x == r + 1 && y == c - 1) || (x == r && y == c - 1) || (x == r - 1 && y == c - 1)) {
+                continue;
+            } else {
                 grid[x][y] = -1;
                 count++;
             }
         }
-        int dx[]={-1, -1, 0, 1, 1, 1, 0, -1};
-        int dy[]={0, 1, 1, 1, 0, -1, -1, -1};
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (grid[i][j] == -1) continue;
@@ -183,14 +207,15 @@ public class GameScreen extends AppCompatActivity {
             }
         }
     }
-    void prepareForFlags()
-    {
+
+    void prepareForFlags() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                isFlagged[i][j]=false;
+                isFlagged[i][j] = false;
             }
         }
     }
+
     Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
@@ -208,6 +233,7 @@ public class GameScreen extends AppCompatActivity {
 
     void reveal(int i, int j) {
         if (!timerStarted) {
+            placeMines(i, j);
             timerStarted = true;
             handler.postDelayed(timerRunnable, 1000);
         }
@@ -218,7 +244,7 @@ public class GameScreen extends AppCompatActivity {
                 cells[i][j].setImageResource(R.drawable.white_flag);
                 isFlagged[i][j] = true;
                 flagsLeft--;
-            } else if(isFlagged[i][j]){
+            } else if (isFlagged[i][j]) {
                 cells[i][j].setImageDrawable(null);
                 isFlagged[i][j] = false;
                 flagsLeft++;
@@ -239,14 +265,14 @@ public class GameScreen extends AppCompatActivity {
         if (count == 0) {
             cells[i][j].setImageDrawable(null);
             cells[i][j].setBackground(null);
-            floodFill(i,j);
+            floodFill(i, j);
             if (cellsToReveal == 0) {
                 showGameOver(true);
             }
         } else {
             cells[i][j].setBackground(null);
-            cells[i][j].setImageResource(numbers[count-1]);
-            cells[i][j].setImageTintList(numColours[count-1]);
+            cells[i][j].setImageResource(numbers[count - 1]);
+            cells[i][j].setImageTintList(numColours[count - 1]);
             cells[i][j].setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
         }
         cellsToReveal--;
@@ -259,8 +285,8 @@ public class GameScreen extends AppCompatActivity {
 
     void floodFill(int x, int y) {
 
-        int dx[] = {-1,-1,0,1,1,1,0,-1};
-        int dy[] = {0,1,1,1,0,-1,-1,-1};
+        int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+        int dy[] = {0, 1, 1, 1, 0, -1, -1, -1};
 
         for (int k = 0; k < 8; k++) {
             int nx = x + dx[k];
@@ -277,8 +303,8 @@ public class GameScreen extends AppCompatActivity {
                     cells[nx][ny].setBackground(null);
                 } else {
                     cells[nx][ny].setBackground(null);
-                    cells[nx][ny].setImageResource(numbers[count-1]);
-                    cells[nx][ny].setImageTintList(numColours[count-1]);
+                    cells[nx][ny].setImageResource(numbers[count - 1]);
+                    cells[nx][ny].setImageTintList(numColours[count - 1]);
                 }
 
                 cells[nx][ny].setEnabled(false);
@@ -299,5 +325,24 @@ public class GameScreen extends AppCompatActivity {
         gameOverOverlay.setVisibility(View.VISIBLE);
         gameOverOverlay.setAlpha(0f);
         gameOverOverlay.animate().alpha(1f).setDuration(300);
+
+        if (win) {
+            if (level.equals("easy")) {
+                int time = sp.getInt(EASY_TIME, Integer.MAX_VALUE);
+                if (seconds < time) {
+                    sp.edit().putInt(EASY_TIME, seconds).apply();
+                }
+            } else if (level.equals("medium")) {
+                int time = sp.getInt(MEDIUM_TIME, Integer.MAX_VALUE);
+                if (seconds < time) {
+                    sp.edit().putInt(MEDIUM_TIME, seconds).apply();
+                }
+            } else if (level.equals("hard")) {
+                int time = sp.getInt(HARD_TIME, Integer.MAX_VALUE);
+                if (seconds < time) {
+                    sp.edit().putInt(HARD_TIME, seconds).apply();
+                }
+            }
+        }
     }
 }
