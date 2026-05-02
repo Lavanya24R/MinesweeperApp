@@ -52,7 +52,7 @@ public class WaitingRoomActivity extends AppCompatActivity {
 
         host.setText("Host: " + hostName);
         levelText.setText("Level: " + level);
-        roomIdText.setText("Room ID: " + roomId);
+        roomIdText.setText(roomId);
 
         loadPlayers();
 

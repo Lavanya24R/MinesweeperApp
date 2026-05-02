@@ -8,13 +8,14 @@ public class Room {
     public int rows, cols, mines;
     public String difficulty;
     public String status;
+    public long lastActive;
     public HashMap<String, Player> players;
     public String hostName;
     public String hostId;
 
     public Room() {}
 
-    public Room(List<List<Integer>> grid, int rows, int cols, int mines, String hostId, String name, String difficulty) {
+    public Room(List<List<Integer>> grid, int rows, int cols, int mines, String hostId, String name, String difficulty, long lastActive) {
         this.grid = grid;
         this.rows = rows;
         this.cols = cols;
@@ -22,11 +23,9 @@ public class Room {
         this.status = "waiting";
         this.hostId = hostId;
         this.hostName = name;
+        this.lastActive = lastActive;
         this.players = new HashMap<>();
         this.difficulty=difficulty;
-    }
-    public void addPlayer(String id, Player player) {
-        players.put(id, player);
     }
 
 }

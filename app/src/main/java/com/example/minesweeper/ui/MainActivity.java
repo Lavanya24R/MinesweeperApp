@@ -24,11 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    boolean roomMode=false;
     FrameLayout homeScreen;
     ImageButton arcade, room, stats, easyMode, mediumMode, hardMode, findRoom, createRoom;
     LinearLayout levels, rooms;
-    int rows, cols, mines;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        homeScreen=findViewById(R.id.main);
-        arcade=findViewById(R.id.arcadeBtn);
-        room=findViewById(R.id.roomBtn);
-        stats=findViewById(R.id.statsBtn);
+        homeScreen = findViewById(R.id.main);
+        arcade = findViewById(R.id.arcadeBtn);
+        room = findViewById(R.id.roomBtn);
+        stats = findViewById(R.id.statsBtn);
         levels = findViewById(R.id.levelsOverlay);
         rooms = findViewById(R.id.roomsOverlay);
         easyMode = findViewById(R.id.easyBtn);
@@ -71,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
             rooms.setAlpha(0f);
             rooms.animate().alpha(1f).setDuration(300);
         });
-        stats.setOnClickListener(v -> {
-            Intent i=new Intent(this, StatsActivity.class);
-            startActivity(i);
-        });
         easyMode.setOnClickListener(v -> {
             openLevelGrid("easy");
         });
@@ -85,27 +79,25 @@ public class MainActivity extends AppCompatActivity {
             openLevelGrid("hard");
         });
         createRoom.setOnClickListener(v -> {
-            Intent i=new Intent(this, CreateRoomActivity.class);
-            i.putExtra("joinRoom",false);
+            Intent i = new Intent(this, CreateRoomActivity.class);
+            i.putExtra("joinRoom", false);
             startActivity(i);
         });
         findRoom.setOnClickListener(v -> {
-            Intent i=new Intent(this, CreateRoomActivity.class);
-            i.putExtra("joinRoom",true);
+            Intent i = new Intent(this, CreateRoomActivity.class);
+            i.putExtra("joinRoom", true);
+            startActivity(i);
+        });
+        stats.setOnClickListener(v -> {
+            Intent i = new Intent(this, StatsActivity.class);
             startActivity(i);
         });
     }
-    void openLevelGrid(String level)
-    {
-        if(roomMode)
-        {
-            Intent i=new Intent(this, JoinRoomActivity.class);
-            i.putExtra("level",level);
-            startActivity(i);
-            return;
-        }
-        Intent i=new Intent(this, GameScreen.class);
-        i.putExtra("level",level);
+
+    void openLevelGrid(String level) {
+        Intent i = new Intent(this, GameScreen.class);
+        i.putExtra("level", level);
         startActivity(i);
+        return;
     }
 }

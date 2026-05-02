@@ -26,6 +26,7 @@ public class JoinRoomActivity extends AppCompatActivity {
     LayoutInflater inflater;
     EditText roomId;
     ImageButton joinBtn;
+    TextView levelText;
     String level,name;
 
     @Override
@@ -35,6 +36,7 @@ public class JoinRoomActivity extends AppCompatActivity {
 
         roomId=findViewById(R.id.roomId);
         joinBtn=findViewById(R.id.joinBtn);
+        levelText=findViewById(R.id.level);
 
         joinBtn.setOnClickListener(v -> {
             joinRoomById();
@@ -47,11 +49,13 @@ public class JoinRoomActivity extends AppCompatActivity {
         level=i.getStringExtra("level");
         name=i.getStringExtra("name");
 
+        levelText.setText("Level: "+level);
+
         loadRooms(level);
 
     }
     void loadRooms(String selectedDifficulty) {
-
+        cleanupInactiveRooms();
         DatabaseReference roomsRef = FirebaseManager.rooms();
 
         roomsRef.addValueEventListener(new ValueEventListener() {
@@ -61,7 +65,7 @@ public class JoinRoomActivity extends AppCompatActivity {
                 roomContainer.removeAllViews();
                 for (DataSnapshot roomSnap : snapshot.getChildren()) {
                     String status = roomSnap.child("status").getValue(String.class);
-                    if (!"waiting".equals(status)) continue;
+                    if (status == null || !status.equalsIgnoreCase("waiting")) continue;
 
                     String currentRoomId = roomSnap.getKey();
 
@@ -114,7 +118,7 @@ public class JoinRoomActivity extends AppCompatActivity {
 
             roomRef.child("players")
                     .child(userId)
-                    .setValue(new Player(userId,name, false, 0));
+                    .setValue(new Player(userId,name, false, 0, -1));
 
 
             Intent i = new Intent(this, WaitingRoomActivity.class);
@@ -151,10 +155,12 @@ public class JoinRoomActivity extends AppCompatActivity {
             String userId = "player" + System.currentTimeMillis();
             roomRef.child("players")
                     .child(userId)
-                    .setValue(new Player(userId, name, false, 0));
+                    .setValue(new Player(userId, name, false, 0, -1));
 
             String hostName = snapshot.child("hostName").getValue(String.class);
             if (hostName == null) hostName = "Unknown";
+
+            roomRef.child("lastActive").setValue(System.currentTimeMillis());
 
             Intent i = new Intent(this, WaitingRoomActivity.class);
             i.putExtra("roomId", id);
@@ -163,6 +169,28 @@ public class JoinRoomActivity extends AppCompatActivity {
             i.putExtra("hostName", hostName);
             startActivity(i);
 
+        });
+    }
+    void cleanupInactiveRooms() {
+
+        DatabaseReference roomsRef = FirebaseManager.rooms();
+
+        long currentTime = System.currentTimeMillis();
+        long TIME_LIMIT = 2 * 60 * 1000;
+
+        roomsRef.get().addOnSuccessListener(snapshot -> {
+
+            for (DataSnapshot roomSnap : snapshot.getChildren()) {
+
+                Long lastActive = roomSnap.child("lastActive").getValue(Long.class);
+                long playerCount = roomSnap.child("players").getChildrenCount();
+
+                if (playerCount == 0 ||
+                        (lastActive != null && currentTime - lastActive > TIME_LIMIT)) {
+
+                    roomSnap.getRef().removeValue();
+                }
+            }
         });
     }
 }

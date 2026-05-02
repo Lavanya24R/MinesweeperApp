@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:orientation="vertical"
-    android:padding="0dp"
-    tools:context=".ui.MainActivity">
+    android:padding="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -100,16 +99,30 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="roomId"
+                android:textIsSelectable="true"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/minesweeper"
+            android:text="Players:"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout4" />
 
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="20dp"
             android:contentDescription="Players"
@@ -117,7 +130,7 @@
             app:layout_constraintBottom_toTopOf="@+id/startLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout4">
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
             <LinearLayout
                 android:id="@+id/playerContainer"
@@ -154,5 +167,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="13sp" />
         </FrameLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

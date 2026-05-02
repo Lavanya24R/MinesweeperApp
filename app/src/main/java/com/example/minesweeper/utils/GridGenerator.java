@@ -39,8 +39,6 @@ public class GridGenerator {
                 grid[i][j] = cnt;
             }
         }
-
-        // convert to List<List<Integer>> for Firebase
         List<List<Integer>> listGrid = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             List<Integer> row = new ArrayList<>();

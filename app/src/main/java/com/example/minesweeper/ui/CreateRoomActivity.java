@@ -93,9 +93,9 @@ public class CreateRoomActivity extends AppCompatActivity {
         String userId = "host_" + System.currentTimeMillis();
         String n = name.getText().toString().trim();
 
-        Room room = new Room(grid, rows, cols, mines, userId, n, level);
+        Room room = new Room(grid, rows, cols, mines, userId, n, level, System.currentTimeMillis());
 
-        room.players.put(userId, new Player(userId, n, false, 0));
+        room.players.put(userId, new Player(userId, n, false, 0, -1));
 
         roomsRef.child(roomId).setValue(room)
                 .addOnSuccessListener(unused -> {

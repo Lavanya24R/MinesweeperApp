@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.minesweeper.R;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Random;
 
 
@@ -266,52 +268,66 @@ public class GameScreen extends AppCompatActivity {
             cells[i][j].setImageDrawable(null);
             cells[i][j].setBackground(null);
             floodFill(i, j);
-            if (cellsToReveal == 0) {
-                showGameOver(true);
-            }
-        } else {
+        }
+        else {
             cells[i][j].setBackground(null);
             cells[i][j].setImageResource(numbers[count - 1]);
             cells[i][j].setImageTintList(numColours[count - 1]);
             cells[i][j].setScaleType(ImageButton.ScaleType.CENTER_INSIDE);
+
+            if (cells[i][j].isEnabled()) {
+                cells[i][j].setEnabled(false);
+                cellsToReveal--;
+            }
         }
-        cellsToReveal--;
-        cells[i][j].setEnabled(false);
 
         if (cellsToReveal == 0) {
             showGameOver(true);
         }
     }
 
-    void floodFill(int x, int y) {
+    void floodFill(int startX, int startY) {
 
         int dx[] = {-1, -1, 0, 1, 1, 1, 0, -1};
         int dy[] = {0, 1, 1, 1, 0, -1, -1, -1};
 
-        for (int k = 0; k < 8; k++) {
-            int nx = x + dx[k];
-            int ny = y + dy[k];
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{startX, startY});
 
-            if (possible(nx, ny)) {
+        while (!queue.isEmpty()) {
 
-                if (!cells[nx][ny].isEnabled() || isFlagged[nx][ny]) continue;
+            int[] current = queue.poll();
+            int x = current[0];
+            int y = current[1];
 
-                int count = grid[nx][ny];
+            if (cells[x][y] == null || !cells[x][y].isEnabled()) continue;
 
-                if (count == 0) {
-                    cells[nx][ny].setImageDrawable(null);
-                    cells[nx][ny].setBackground(null);
-                } else {
-                    cells[nx][ny].setBackground(null);
-                    cells[nx][ny].setImageResource(numbers[count - 1]);
-                    cells[nx][ny].setImageTintList(numColours[count - 1]);
-                }
+            int count = grid[x][y];
 
-                cells[nx][ny].setEnabled(false);
-                cellsToReveal--;
+            if (count == 0) {
+                cells[x][y].setImageDrawable(null);
+                cells[x][y].setBackground(null);
+            } else {
+                cells[x][y].setBackground(null);
+                cells[x][y].setImageResource(numbers[count - 1]);
+                cells[x][y].setImageTintList(numColours[count - 1]);
+            }
 
-                if (count == 0) {
-                    floodFill(nx, ny);
+            cells[x][y].setEnabled(false);
+            cellsToReveal--;
+
+            if (count == 0) {
+                for (int k = 0; k < 8; k++) {
+                    int nx = x + dx[k];
+                    int ny = y + dy[k];
+
+                    if (possible(nx, ny) &&
+                            cells[nx][ny] != null &&
+                            cells[nx][ny].isEnabled() &&
+                            !isFlagged[nx][ny]) {
+
+                        queue.add(new int[]{nx, ny});
+                    }
                 }
             }
         }

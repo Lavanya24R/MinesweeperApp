@@ -8,8 +8,7 @@
     android:background="@drawable/bg"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="0dp"
-    tools:context=".ui.MainActivity">
+    android:padding="0dp">
 
     <LinearLayout
         android:id="@+id/roomsOverlay"
